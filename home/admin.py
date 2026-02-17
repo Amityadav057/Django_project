@@ -10,3 +10,14 @@ class SchoolAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_display_links = ['address']
     list_editable = ['school_unique_code','name']
+    
+    
+# python manage.py shell
+'''
+
+School.objects.all() = > all data from school model
+School.objects.filter(name="") get multiple data, result return in list
+School.objects.get(id=1) get single dat, doesnot support multiple data return
+School.objects.filter(id=1).update(name="")
+School.objects.filter(id=1).delete()
+'''
