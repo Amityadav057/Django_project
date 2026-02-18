@@ -30,11 +30,10 @@ def school_create(request):
             address = data['address'],
         )
         return redirect('/home/school')
-    return render(request, 'school/create.html',)
+    return render(request, 'school/create.html')
 
 
 def school_create2(request):
-
     if request.method == "POST":
         data = request.POST
         form = SchoolForm(data=data)
@@ -42,11 +41,34 @@ def school_create2(request):
             form.save()
             return redirect('/home/school')
         else:
-            print(form.errors)
-    form = SchoolForm()
-    context = {
-        "form":form
-    }
+            return render(request, 'school/create2.html',{'form':form})
+    else:
+        form = SchoolForm()
+
+
+    return render(request, 'school/create2.html',{'form':form})
+
+
+
+def school_update(request,id):
+    school = School.objects.get(id=id)
     if request.method == "POST":
-        print("........",form.errors)
-    return render(request, 'school/create2.html',context=context)
+        data = request.POST
+        form = SchoolForm(data=data, instance=school)
+        if form.is_valid():
+            form.save()
+            return redirect('/home/school')
+        else:
+            return render(request, 'school/update.html',{'form':form})
+    else:
+        form = SchoolForm(instance=school)
+
+
+    return render(request, 'school/update.html',{'form':form})
+
+
+def delete_school(request,id):
+    school = School.objects.filter(id=id)
+    school.delete()
+    return redirect('/home/school')
+
