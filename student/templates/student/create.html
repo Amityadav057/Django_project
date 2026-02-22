@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+
+{% block maincontent %}
+<div class="card shadow p-4" style="width: 400px;">
+      <h2 class="text-center mb-4">Create Student</h2>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+          Create Student
+        </button>
+      </form>
+</div>
+
+
+{% endblock %}
