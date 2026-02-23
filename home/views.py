@@ -2,11 +2,22 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from home.models import School
 from home.forms import SchoolForm
+from student.models import Student
+from django.db.models import Count
 
 # Create your views here.
 def home(request):
-    print("home func")
-    return HttpResponse("Hello this is from home func")
+    school_status = School.objects.values('is_active').annotate(count = Count('is_active'))
+    school_student_count = Student.objects.values('school__name').annotate(count = Count('id')).order_by('-count')
+    last_five_school = School.objects.filter(is_active = True).order_by('-updated_at')[:5]
+    context = {
+        "student_count":Student.objects.all().count(),
+        "school_count":School.objects.all().count(),
+        "school_status":school_status,
+        "last_five_school":last_five_school,
+        "school_student_count":school_student_count
+    }
+    return render(request, 'base/base.html', context)
 
 
 def test_views(request):

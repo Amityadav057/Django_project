@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+
+{% block maincontent %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Grade List</h2>
+    <a href="{% url 'create-grade' %}" class="btn btn-primary">
+        Add Grade
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Subjects</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in grades %}
+                <tr>
+                    <td>{{ grade.name }}</td>
+                    <td>
+                        {% for subject in grade.subject.all %}
+                            <span class="badge bg-warning text-dark">
+                                {{ subject.name }}
+                            </span>
+                        {% empty %}
+                            <span class="text-muted">No subjects</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center">
+                        No grades available
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

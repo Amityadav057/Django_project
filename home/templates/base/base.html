@@ -1,86 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %} Dashboard {% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <style>
-        body {
-            overflow-x: hidden;
-        }
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-        }
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-        }
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-        .content {
-            padding: 20px;
-        }
+      body {
+        overflow-x: hidden;
+      }
+      .sidebar {
+        height: 100vh;
+        background-color: #343a40;
+      }
+      .sidebar a {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        padding: 10px 15px;
+      }
+      .sidebar a:hover {
+        background-color: #495057;
+      }
+      .content {
+        padding: 20px;
+      }
     </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
         <a class="navbar-brand" href="#">Broadway</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                </li>
-            </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Logout</a>
+            </li>
+          </ul>
         </div>
-    </div>
-</nav>
+      </div>
+    </nav>
 
-<div class="container-fluid">
-    <div class="row">
-
+    <div class="container-fluid">
+      <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-3 col-lg-2 d-md-block sidebar collapse show" id="sidebarMenu">
-            <div class="pt-3">
-                <a href="/home">Dashboard</a>
-                <a href="/student">Student</a>
-                <a href="/home/school">School</a>
-            </div>
+        <div
+          class="col-md-3 col-lg-2 d-md-block sidebar collapse show"
+          id="sidebarMenu"
+        >
+        
+          <div class="pt-4">
+            <a href="/home">Dashboard</a>
+            <a href="/student">Student</a>
+            <a href="/home/school">School</a>
+            <a href="/student/grade">Grade</a>
+            <a href="/student/subject">Subject</a>
+
+
+          </div>
         </div>
 
         <!-- Main Content -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 content">
-            {% block maincontent %}
-            <h1>Dashboard</h1>
-            <p>Your main content goes here.</p>
-            {% endblock %}
-        </main>
+        <main class="col-md-9 ms-sm-auto col-lg-9 content">
+  {% block maincontent %}
 
+  <!-- Top Count Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-primary shadow-sm h-100">
+        <div class="card-body text-center">
+          <h6 class="mb-1">Students</h6>
+          <h2 class="mb-0">{{ student_count }}</h2>
+        </div>
+      </div>
     </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-info shadow-sm h-100">
+        <div class="card-body text-center">
+          <h6 class="mb-1">Schools</h6>
+          <h2 class="mb-0">{{ school_count }}</h2>
+        </div>
+      </div>
+    </div>
 
-</body>
+    <div class="col-md-3 mb-3">
+      <div class="card text-white bg-danger shadow-sm h-100">
+        <div class="card-body text-center">
+          <h6 class="mb-1">Grades</h6>
+          <h2 class="mb-0">{{ grade_count }}</h2>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Subjects card aligned right -->
+    <div class="col-md-3 mb-3 ms-auto">
+      <div class="card text-white bg-warning shadow-sm h-100">
+        <div class="card-body text-center">
+          <h6 class="mb-1">Subjects</h6>
+          <h2 class="mb-0">{{ subject_count }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- School Status Grid -->
+  <h5 class="mb-3">School Status</h5>
+  <div class="row mb-4">
+    {% for i in school_status %}
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card text-white shadow-sm {% if i.is_active %}bg-success{% else %}bg-danger{% endif %}">
+        <div class="card-body text-center">
+          <h6 class="mb-1">{% if i.is_active %}Active Schools{% else %}Inactive Schools{% endif %}</h6>
+          <h2 class="mb-0">{{ i.count }}</h2>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Count Students by School -->
+  <h4>Count Students by School</h4>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-bordered table-striped table-hover text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in school_student_count %}
+          <tr>
+            <td>{{ i.school__name }}</td>
+            <td>{{ i.count }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- Count Students by School -->
+  <h4>Count Subjects by School</h4>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-bordered table-striped table-hover text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in school_subject_count %}
+          <tr>
+            <td>{{ i.school__name }}</td>
+            <td>{{ i.count }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Last 5 Updated Schools -->
+  <h4>Last 5 Updated Schools</h4>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-bordered table-striped table-hover text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in last_five_school %}
+          <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.address }}</td>
+            <td>
+              {% if i.is_active %}
+              <span class="badge bg-success">Active</span>
+              {% else %}
+              <span class="badge bg-danger">Inactive</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% endblock %}
+</main>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

@@ -15,9 +15,21 @@ class Student(models.Model):
         return f'{self.name}'
 
 
-# on delete
-'''
-CASCADE
-SET_NULL
-Restrict
-'''
+class Subject(models.Model):
+    name = models.CharField(max_length=20, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Grade(models.Model):
+    name = models.CharField(max_length=20, null=True, blank=True)
+    subject =  models.ManyToManyField(Subject)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    

@@ -9,7 +9,7 @@ class SchoolAdmin(admin.ModelAdmin):
     list_filter = ['is_active']
     search_fields = ['name']
     list_display_links = ['address']
-    list_editable = ['school_unique_code','name']
+    list_editable = ['school_unique_code','name','is_active']
 
 
 
