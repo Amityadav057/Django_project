@@ -4,8 +4,10 @@ from home.models import School
 from home.forms import SchoolForm
 from student.models import Student
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required()
 def home(request):
     school_status = School.objects.values('is_active').annotate(count = Count('is_active'))
     school_student_count = Student.objects.values('school__name').annotate(count = Count('id')).order_by('-count')
@@ -26,7 +28,7 @@ def test_views(request):
         "address":"nepal"
     },safe=False)
 
-
+@login_required()
 def school_list(request):
     school = School.objects.all()
     return render(request, 'school/school.html', {"school":school})
