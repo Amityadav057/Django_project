@@ -37,7 +37,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Broadway,Hello, {{request.user}}</a>
+        <a class="navbar-brand" href="#">Broadway, Hello, {{request.user}} </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -56,7 +56,7 @@
               <a class="nav-link" href="#">Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Logout</a>
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
           </ul>
         </div>
@@ -70,157 +70,118 @@
           class="col-md-3 col-lg-2 d-md-block sidebar collapse show"
           id="sidebarMenu"
         >
-        
-          <div class="pt-4">
+          <div class="pt-3">
             <a href="/home">Dashboard</a>
             <a href="/student">Student</a>
             <a href="/home/school">School</a>
             <a href="/student/grade">Grade</a>
-            <a href="/student/subject">Subject</a>
-
 
           </div>
         </div>
 
         <!-- Main Content -->
-        <main class="col-md-9 ms-sm-auto col-lg-9 content">
-  {% block maincontent %}
+        <main class="col-md-9 ms-sm-auto col-lg-10 content">
+          {% block maincontent %}
 
-  <!-- Top Count Cards -->
-  <div class="row mb-4">
-    <div class="col-md-3 mb-3">
-      <div class="card text-white bg-primary shadow-sm h-100">
-        <div class="card-body text-center">
-          <h6 class="mb-1">Students</h6>
-          <h2 class="mb-0">{{ student_count }}</h2>
-        </div>
-      </div>
-    </div>
+          <!-- Top Count Cards -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+              <div class="card text-white bg-primary shadow-sm">
+                <div class="card-body text-center">
+                  <h6 class="mb-1">Students</h6>
+                  <h2 class="mb-0">{{ student_count }}</h2>
+                </div>
+              </div>
+            </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="card text-white bg-info shadow-sm h-100">
-        <div class="card-body text-center">
-          <h6 class="mb-1">Schools</h6>
-          <h2 class="mb-0">{{ school_count }}</h2>
-        </div>
-      </div>
-    </div>
+            <div class="col-md-6 mb-3">
+              <div class="card text-white bg-info shadow-sm">
+                <div class="card-body text-center">
+                  <h6 class="mb-1">Schools</h6>
+                  <h2 class="mb-0">{{ school_count }}</h2>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <div class="col-md-3 mb-3">
-      <div class="card text-white bg-danger shadow-sm h-100">
-        <div class="card-body text-center">
-          <h6 class="mb-1">Grades</h6>
-          <h2 class="mb-0">{{ grade_count }}</h2>
-        </div>
-      </div>
-    </div>
+          <!-- School Status Grid -->
+          <h5 class="mb-3">School Status</h5>
 
+          <div class="row">
+            {% for i in school_status %}
+            <div class="col-md-6 col-lg-4 mb-3">
+              <div
+                class="card text-white {% if i.is_active %}bg-success{% else %}bg-danger{% endif %} shadow-sm"
+              >
+                <div class="card-body text-center">
+                  <h6 class="mb-1">
+                    {% if i.is_active %} Active Schools {% else %} Inactive
+                    Schools {% endif %}
+                  </h6>
+                  <h2 class="mb-0">{{ i.count }}</h2>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
 
-    <!-- Subjects card aligned right -->
-    <div class="col-md-3 mb-3 ms-auto">
-      <div class="card text-white bg-warning shadow-sm h-100">
-        <div class="card-body text-center">
-          <h6 class="mb-1">Subjects</h6>
-          <h2 class="mb-0">{{ subject_count }}</h2>
-        </div>
-      </div>
-    </div>
-  </div>
+          <h4> Count Student by school </h4>
+          <div class="card shadow">
+            <div class="card-body">
+              <table class="table table-bordered table-striped table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
 
-  <!-- School Status Grid -->
-  <h5 class="mb-3">School Status</h5>
-  <div class="row mb-4">
-    {% for i in school_status %}
-    <div class="col-md-6 col-lg-4 mb-3">
-      <div class="card text-white shadow-sm {% if i.is_active %}bg-success{% else %}bg-danger{% endif %}">
-        <div class="card-body text-center">
-          <h6 class="mb-1">{% if i.is_active %}Active Schools{% else %}Inactive Schools{% endif %}</h6>
-          <h2 class="mb-0">{{ i.count }}</h2>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+                <tbody>
+                  {% for i in school_student_count %}
+                  <tr>
+                    <td>{{ i.school__name }}</td>
+                    <td>{{ i.count }}</td>
 
-  <!-- Count Students by School -->
-  <h4>Count Students by School</h4>
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <table class="table table-bordered table-striped table-hover text-center align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Name</th>
-            <th>Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for i in school_student_count %}
-          <tr>
-            <td>{{ i.school__name }}</td>
-            <td>{{ i.count }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br>
+          <h4> Last 5 updated school</h4>
 
+           <div class="card shadow">
+            <div class="card-body">
+              <table class="table table-bordered table-striped table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Is Active</th>
+                  </tr>
+                </thead>
 
-  <!-- Count Students by School -->
-  <h4>Count Subjects by School</h4>
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <table class="table table-bordered table-striped table-hover text-center align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for i in school_subject_count %}
-          <tr>
-            <td>{{ i.school__name }}</td>
-            <td>{{ i.count }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Last 5 Updated Schools -->
-  <h4>Last 5 Updated Schools</h4>
-  <div class="card shadow mb-4">
-    <div class="card-body">
-      <table class="table table-bordered table-striped table-hover text-center align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for i in last_five_school %}
-          <tr>
-            <td>{{ i.name }}</td>
-            <td>{{ i.address }}</td>
-            <td>
-              {% if i.is_active %}
-              <span class="badge bg-success">Active</span>
-              {% else %}
-              <span class="badge bg-danger">Inactive</span>
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  {% endblock %}
-</main>
+                <tbody>
+                 {% for i in last_five_school %}
+                  <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.address }}</td>
+                    <td>
+                      {% if i.is_active %}
+                      <span class="badge bg-success">Active</span>
+                      {% else %}
+                      <span class="badge bg-danger">Inactive</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endblock %}
+        </main>
       </div>
     </div>
 

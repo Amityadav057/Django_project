@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Register</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #4e73df, #1cc88a);
-            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
-        .register-card {
+        .form-container {
             background: #ffffff;
             padding: 40px;
-            width: 400px;
-            border-radius: 10px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .register-card h2 {
+        .form-container h2 {
             text-align: center;
             margin-bottom: 25px;
             color: #333;
@@ -35,51 +36,53 @@
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
             border-radius: 6px;
             border: 1px solid #ccc;
             font-size: 14px;
+            transition: 0.3s;
         }
 
         input:focus {
+            border-color: #667eea;
             outline: none;
-            border-color: #4e73df;
-            box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
         }
 
         button {
             width: 100%;
             padding: 12px;
-            background-color: #4e73df;
             border: none;
             border-radius: 6px;
+            background: #667eea;
             color: white;
             font-size: 16px;
             cursor: pointer;
-            transition: 0.3s ease;
+            transition: 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
-            background-color: #2e59d9;
+            background: #5a67d8;
         }
 
         .errorlist {
             color: red;
             font-size: 13px;
+            margin-bottom: 5px;
             list-style: none;
             padding: 0;
         }
-
     </style>
 </head>
 
 <body>
-    <div class="register-card">
-        <h2>Create Account</h2>
+    <div class="form-container">
+        <h2>User Login</h2>
+
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Register</button>
+            <button type="submit">Login</button>
         </form>
     </div>
 </body>

@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 
-from student.models import Student, Grade, Subject
 from student.forms import StudentForm
-from .forms import GradeForm
-from .forms import SubjectForm
+from student.models import Grade, Student
+
 # Create your views here.
+
+@login_required()
 def student_list(request):
     data = Student.objects.all()
     context = {
@@ -35,38 +37,6 @@ def grade_view(request):
         "grade":grade
     }
     return render(request, 'grade/index.html', context)
-
-# CREATE VIEW
-def create_grade(request):
-    if request.method == 'POST':
-        form = GradeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('grade-view')
-    else:
-        form = GradeForm()
-
-    return render(request, 'grade/create.html', {'form': form})
-
-
-def subject_view(request):
-    subjects = Subject.objects.all()
-    context = {
-        "subjects":subjects
-    }
-    return render(request, 'subject/index.html', context)
-
-# SUBJECT CREATE
-def create_subject(request):
-    if request.method == 'POST':
-        form = SubjectForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('subject-view')
-    else:
-        form = SubjectForm()
-
-    return render(request, 'subject/create.html', {'form': form})
 
 
 # grade crud operation

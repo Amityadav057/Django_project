@@ -1,21 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.translation import gettext_lazy as _
-
 # Create your models here.
+
 class Userbalance1(models.Model):
-    user = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.RESTRICT)
+    user = models.ForeignKey(User, on_delete=models.RESTRICT, unique=True)
     balance = models.IntegerField(default=0)
-    
+
+
     def __str__(self):
         return self.user.username
-    
+
     # class Meta:
-    #     unique_together = ['user', 'balance']
- 
+    #     unique_together = ['user','balance']
+
+
 class Userbalance2(models.Model):
-        user = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.RESTRICT)
-        balance = models.IntegerField(default=0)
-    
-        def __str__(self):
-          return self.user.username   
+    user = models.OneToOneField(User, on_delete=models.RESTRICT)
+    balance = models.IntegerField(default=0)
+
+
+    def __str__(self):
+        return self.user.username

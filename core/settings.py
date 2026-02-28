@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'student',
     'user',
 ]
-LOGIN_URL = '/admin/login/'
+LOGIN_URL = '/user/login/'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
